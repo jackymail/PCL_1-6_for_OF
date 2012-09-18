@@ -17,7 +17,26 @@ void testApp::setup(){
 		}
 		
 	}
+	// Create a KD-Tree
+	pcl::search::KdTree<pcl::PointXYZRGB>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZRGB>);
 	
+	// Output has the PointNormal type in order to store the normals calculated by MLS
+	pcl::PointCloud<pcl::PointNormal> mls_points;
+	
+	// Init object (second point type is for the normals, even if unused)
+	pcl::MovingLeastSquaresOMP<pcl::PointXYZRGB, pcl::PointNormal> mls(12);
+	
+	mls.setComputeNormals (true);
+	
+	// Set parameters
+	mls.setInputCloud (cloud);
+	mls.setPolynomialFit (true);
+	mls.setSearchMethod (tree);
+	mls.setSearchRadius (0.03);
+	
+	// Reconstruct
+	mls.process (mls_points);
+	cout << "MADE IT" << endl;
 }
 
 //--------------------------------------------------------------
