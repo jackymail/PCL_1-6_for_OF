@@ -7,6 +7,7 @@
 #include <pcl/point_types.h>
 #include <pcl/features/normal_3d.h>
 #include <pcl/kdtree/kdtree_flann.h>
+#include <pcl/surface/mls_omp.h>
 #define Nil __DARWIN_NULL
 #define nil __DARWIN_NULL
 
