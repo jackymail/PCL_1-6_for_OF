@@ -3,8 +3,8 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 	ofSetLogLevel(OF_LOG_VERBOSE);
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
-	if (pcl::io::loadPCDFile<pcl::PointXYZ> (ofToDataPath("bunny.pcd", true), *cloud) == -1) // load the file
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZRGB>);
+	if (pcl::io::loadPCDFile<pcl::PointXYZRGB> (ofToDataPath("table_scene_mug_stereo_textured.pcd", true), *cloud) == -1) // load the file
 	{
 		ofLogVerbose ("Couldn't read file");
 		
@@ -13,6 +13,7 @@ void testApp::setup(){
 		for (int i=0; i<cloud->points.size(); i++) 
 		{
 			mesh.addVertex(ofVec3f(cloud->points[i].x, cloud->points[i].y, cloud->points[i].z));
+			mesh.addColor(ofColor(cloud->points[i].r, cloud->points[i].g, cloud->points[i].b));
 		}
 		
 	}
@@ -31,7 +32,7 @@ void testApp::draw(){
 	
 	ofPushStyle();
 		camera.begin();
-			ofSetColor(ofColor::blue);
+			//ofSetColor(ofColor::blue);
 			ofScale(500, 500, 500);
 			mesh.drawVertices();
 		camera.end();
